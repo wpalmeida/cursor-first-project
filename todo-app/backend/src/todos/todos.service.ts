@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Todo } from './todo.entity';
@@ -18,17 +18,13 @@ export class TodosService {
     private auditService: AuditService,
   ) {}
 
-  async findAll(userId: string): Promise<Todo[]> {
-    return this.todosRepository.find({
-      where: { user: { id: userId } },
-      relations: ['user'],
-    });
+  async findAll(): Promise<Todo[]> {
+    return this.todosRepository.find();
   }
 
-  async findOne(userId: string, id: string): Promise<Todo> {
+  async findOne(id: string): Promise<Todo> {
     const todo = await this.todosRepository.findOne({
-      where: { id, user: { id: userId } },
-      relations: ['user'],
+      where: { id },
     });
     
     if (!todo) {
@@ -38,11 +34,8 @@ export class TodosService {
     return todo;
   }
 
-  async create(userId: string, createTodoDto: CreateTodoDto): Promise<Todo> {
-    const todo = this.todosRepository.create({
-      ...createTodoDto,
-      user: { id: userId },
-    });
+  async create(createTodoDto: CreateTodoDto): Promise<Todo> {
+    const todo = this.todosRepository.create(createTodoDto);
     const savedTodo = await this.todosRepository.save(todo);
     
     // Log to audit
@@ -54,14 +47,14 @@ export class TodosService {
     return savedTodo;
   }
 
-  async update(userId: string, id: string, updateTodoDto: UpdateTodoDto): Promise<Todo> {
-    const todo = await this.findOne(userId, id);
+  async update(id: string, updateTodoDto: UpdateTodoDto): Promise<Todo> {
+    const todo = await this.findOne(id);
     Object.assign(todo, updateTodoDto);
     return this.todosRepository.save(todo);
   }
 
-  async remove(userId: string, id: string): Promise<void> {
-    const todo = await this.findOne(userId, id);
+  async remove(id: string): Promise<void> {
+    const todo = await this.findOne(id);
     await this.todosRepository.remove(todo);
     
     // Log to audit

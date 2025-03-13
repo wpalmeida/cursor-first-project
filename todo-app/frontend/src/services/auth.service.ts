@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import { loggingService } from './logging.service';
 
 const API_URL = 'http://localhost:3001';
 
@@ -51,15 +52,49 @@ class AuthService {
   }
 
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
-    const response = await axios.post<AuthResponse>(`${API_URL}/auth/login`, credentials);
-    this.setToken(response.data.access_token);
-    return response.data;
+    try {
+      console.log('Attempting login with:', credentials);
+      loggingService.logRequest('POST', `${API_URL}/auth/login`, {}, credentials);
+      const response = await axios.post<AuthResponse>(`${API_URL}/auth/login`, credentials);
+      console.log('Login response:', response.data);
+      loggingService.logResponse('POST', `${API_URL}/auth/login`, response.status, response.data);
+      this.setToken(response.data.access_token);
+      return response.data;
+    } catch (error) {
+      console.error('Login error:', error);
+      if (axios.isAxiosError(error)) {
+        console.error('Axios error details:', {
+          status: error.response?.status,
+          data: error.response?.data,
+          message: error.message
+        });
+      }
+      loggingService.logError('POST', `${API_URL}/auth/login`, error);
+      throw error;
+    }
   }
 
   async register(data: RegisterData): Promise<AuthResponse> {
-    const response = await axios.post<AuthResponse>(`${API_URL}/auth/register`, data);
-    this.setToken(response.data.access_token);
-    return response.data;
+    try {
+      console.log('Attempting registration with:', data);
+      loggingService.logRequest('POST', `${API_URL}/auth/register`, {}, data);
+      const response = await axios.post<AuthResponse>(`${API_URL}/auth/register`, data);
+      console.log('Registration response:', response.data);
+      loggingService.logResponse('POST', `${API_URL}/auth/register`, response.status, response.data);
+      this.setToken(response.data.access_token);
+      return response.data;
+    } catch (error) {
+      console.error('Registration error:', error);
+      if (axios.isAxiosError(error)) {
+        console.error('Axios error details:', {
+          status: error.response?.status,
+          data: error.response?.data,
+          message: error.message
+        });
+      }
+      loggingService.logError('POST', `${API_URL}/auth/register`, error);
+      throw error;
+    }
   }
 
   logout() {
