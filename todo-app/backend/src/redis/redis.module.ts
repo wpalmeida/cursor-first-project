@@ -1,11 +1,12 @@
-import { Module, CacheModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import * as redisStore from 'cache-manager-redis-store';
 import { RedisService } from './redis.service';
+import { CacheModule as NestCacheModule } from '@nestjs/cache-manager';
+import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
   imports: [
-    CacheModule.registerAsync({
+    NestCacheModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
