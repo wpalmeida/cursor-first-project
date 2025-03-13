@@ -10,11 +10,16 @@ export default function App({ Component, pageProps }: AppProps) {
     // Check authentication on route changes
     const handleRouteChange = () => {
       const isAuthPage = router.pathname === '/login' || router.pathname === '/register';
-      if (!authService.isAuthenticated() && !isAuthPage) {
+      const isAuthenticated = authService.isAuthenticated();
+      
+      if (!isAuthenticated && !isAuthPage) {
         router.push('/login');
+      } else if (isAuthenticated && isAuthPage) {
+        router.push('/');
       }
     };
 
+    handleRouteChange(); // Check on initial load
     router.events.on('routeChangeStart', handleRouteChange);
     return () => {
       router.events.off('routeChangeStart', handleRouteChange);
@@ -34,7 +39,10 @@ export default function App({ Component, pageProps }: AppProps) {
             <div className="flex items-center">
               {authService.isAuthenticated() && (
                 <button
-                  onClick={() => authService.logout()}
+                  onClick={() => {
+                    authService.logout();
+                    router.push('/login');
+                  }}
                   className="ml-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
                 >
                   Logout
