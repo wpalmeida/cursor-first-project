@@ -6,6 +6,8 @@ import { TodosModule } from './todos/todos.module';
 import { AuditModule } from './audit/audit.module';
 import { RabbitMQModule } from './rabbitmq/rabbitmq.module';
 import { RedisModule } from './redis/redis.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -33,8 +35,9 @@ import { RedisModule } from './redis/redis.module';
     TodosModule,
     AuditModule,
     RabbitMQModule,
-    // Temporarily disable Redis module
-    // RedisModule,
+    RedisModule,
+    AuthModule,
+    UsersModule,
   ],
 })
 export class AppModule {} 
