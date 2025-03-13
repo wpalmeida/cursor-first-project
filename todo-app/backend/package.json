@@ -31,7 +31,10 @@
     "@nestjs/websockets": "^10.0.0",
     "@nestjs/cache-manager": "^2.1.0",
     "amqplib": "^0.10.3",
+<<<<<<< HEAD
     "bcrypt": "^5.1.1",
+=======
+>>>>>>> 47f2224 (Updated MongoDB URI in .env file, refactored TypeORM and Mongoose configurations in app.module.ts for improved clarity, and modified TodosService to temporarily disable Redis caching while renaming the todo repository variable for consistency.)
     "cache-manager": "^4.1.0",
     "cache-manager-redis-store": "^2.0.0",
     "class-transformer": "^0.5.1",

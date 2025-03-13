@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
+<<<<<<< HEAD
     "target": "es5",
+=======
+>>>>>>> 47f2224 (Updated MongoDB URI in .env file, refactored TypeORM and Mongoose configurations in app.module.ts for improved clarity, and modified TodosService to temporarily disable Redis caching while renaming the todo repository variable for consistency.)
     "lib": [
       "dom",
       "dom.iterable",
@@ -8,11 +11,16 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
+<<<<<<< HEAD
     "strict": true,
+=======
+    "strict": false,
+>>>>>>> 47f2224 (Updated MongoDB URI in .env file, refactored TypeORM and Mongoose configurations in app.module.ts for improved clarity, and modified TodosService to temporarily disable Redis caching while renaming the todo repository variable for consistency.)
     "noEmit": true,
     "incremental": true,
     "esModuleInterop": true,
     "module": "esnext",
+<<<<<<< HEAD
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -25,12 +33,22 @@
     "paths": {
       "@/*": ["./src/*"]
     }
+=======
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+>>>>>>> 47f2224 (Updated MongoDB URI in .env file, refactored TypeORM and Mongoose configurations in app.module.ts for improved clarity, and modified TodosService to temporarily disable Redis caching while renaming the todo repository variable for consistency.)
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
+<<<<<<< HEAD
     "**/*.tsx",
     ".next/types/**/*.ts"
+=======
+    "**/*.tsx"
+>>>>>>> 47f2224 (Updated MongoDB URI in .env file, refactored TypeORM and Mongoose configurations in app.module.ts for improved clarity, and modified TodosService to temporarily disable Redis caching while renaming the todo repository variable for consistency.)
   ],
   "exclude": [
     "node_modules"

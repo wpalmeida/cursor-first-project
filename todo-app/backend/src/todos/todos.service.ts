@@ -19,13 +19,21 @@ export class TodosService {
   ) {}
 
   async findAll(): Promise<Todo[]> {
+<<<<<<< HEAD
+=======
+    // Temporarily disable Redis cache
+>>>>>>> 47f2224 (Updated MongoDB URI in .env file, refactored TypeORM and Mongoose configurations in app.module.ts for improved clarity, and modified TodosService to temporarily disable Redis caching while renaming the todo repository variable for consistency.)
     return this.todosRepository.find();
   }
 
   async findOne(id: string): Promise<Todo> {
+<<<<<<< HEAD
     const todo = await this.todosRepository.findOne({
       where: { id },
     });
+=======
+    const todo = await this.todosRepository.findOneBy({ id });
+>>>>>>> 47f2224 (Updated MongoDB URI in .env file, refactored TypeORM and Mongoose configurations in app.module.ts for improved clarity, and modified TodosService to temporarily disable Redis caching while renaming the todo repository variable for consistency.)
     
     if (!todo) {
       throw new NotFoundException(`Todo with ID ${id} not found`);
@@ -48,14 +56,24 @@ export class TodosService {
   }
 
   async update(id: string, updateTodoDto: UpdateTodoDto): Promise<Todo> {
+<<<<<<< HEAD
     const todo = await this.findOne(id);
     Object.assign(todo, updateTodoDto);
     return this.todosRepository.save(todo);
+=======
+    await this.todosRepository.update(id, updateTodoDto);
+    return this.findOne(id);
+>>>>>>> 47f2224 (Updated MongoDB URI in .env file, refactored TypeORM and Mongoose configurations in app.module.ts for improved clarity, and modified TodosService to temporarily disable Redis caching while renaming the todo repository variable for consistency.)
   }
 
   async remove(id: string): Promise<void> {
     const todo = await this.findOne(id);
+<<<<<<< HEAD
     await this.todosRepository.remove(todo);
+=======
+    
+    await this.todosRepository.delete(id);
+>>>>>>> 47f2224 (Updated MongoDB URI in .env file, refactored TypeORM and Mongoose configurations in app.module.ts for improved clarity, and modified TodosService to temporarily disable Redis caching while renaming the todo repository variable for consistency.)
     
     // Log to audit
     await this.auditService.logTodoDeletion({ id });
